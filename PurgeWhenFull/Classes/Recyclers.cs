@@ -10,8 +10,8 @@ namespace PurgeWhenFull
         {
             UnityEngine.Object.FindObjectsOfType<ActionRecycle>().ToList().ForEach(recycleable =>
             {
-                string group = recycleable.transform.parent?.parent?.parent?.parent?.GetComponent<WorldObjectAssociated>()?.GetWorldObject()?.GetGroup()?.id;
-                if (!group.IsNullOrWhiteSpace() && group.StartsWith("RecyclingMachine"))
+                string groupId = recycleable.transform.parent?.parent?.parent?.parent?.GetComponent<WorldObjectAssociated>()?.GetWorldObject()?.GetGroup()?.id;
+                if (!groupId.IsNullOrWhiteSpace() && groupId.StartsWith("RecyclingMachine"))
                 {
                     Inventory inventory = recycleable.transform.parent?.parent?.parent?.parent?.GetComponent<InventoryAssociated>()?.GetInventory();
                     if (inventory != null && inventory.IsFull()) { recycleable.OnAction(); }

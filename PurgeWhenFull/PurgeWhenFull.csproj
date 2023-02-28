@@ -27,7 +27,7 @@
   
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\Planet Crafter_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\Planet Crafter_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>
