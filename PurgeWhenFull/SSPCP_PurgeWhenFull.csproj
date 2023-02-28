@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
     <AssemblyName>SSPCP_PurgeWhenFull</AssemblyName>
-    <Description>My first plugin</Description>
+    <Description>SSPCP_PurgeWhenFull</Description>
     <Version>1.0.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
