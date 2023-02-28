@@ -11,7 +11,7 @@ namespace SSPCP_PurgeWhenFull.Classes
             {
                 Destructors.Purge();
                 Recyclers.Purge();
-                yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(1f);
             }
         }
     }
