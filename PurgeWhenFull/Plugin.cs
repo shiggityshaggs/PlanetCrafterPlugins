@@ -9,6 +9,6 @@ public class Plugin : BaseUnityPlugin
     {
         // Plugin startup logic
         Logger.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is loaded!");
-        StartCoroutine(Purger.Coroutine());
+        StartCoroutine(Classes.Purger.Coroutine());
     }
 }

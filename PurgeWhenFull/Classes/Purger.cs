@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace PurgeWhenFull
+namespace PurgeWhenFull.Classes
 {
     internal class Purger
     {
         internal static IEnumerator Coroutine()
         {
-            for (;;)
+            for (; ; )
             {
                 Destructors.Purge();
                 Recyclers.Purge();
