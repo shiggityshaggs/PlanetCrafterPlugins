@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSPCP_PurgeWhenFull", "PurgeWhenFull\SSPCP_PurgeWhenFull.csproj", "{584F6915-4262-43EA-A8E8-32FDBE0F043C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSPCP_MaxLOD", "SSPCP_MaxLOD\SSPCP_MaxLOD.csproj", "{D5AA9BCE-8B88-48FA-8390-7065296B77FC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{584F6915-4262-43EA-A8E8-32FDBE0F043C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{584F6915-4262-43EA-A8E8-32FDBE0F043C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{584F6915-4262-43EA-A8E8-32FDBE0F043C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5AA9BCE-8B88-48FA-8390-7065296B77FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5AA9BCE-8B88-48FA-8390-7065296B77FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5AA9BCE-8B88-48FA-8390-7065296B77FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5AA9BCE-8B88-48FA-8390-7065296B77FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
