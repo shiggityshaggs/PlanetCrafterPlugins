@@ -2,7 +2,7 @@
 using SpaceCraft;
 using System.Linq;
 
-namespace SSPCP
+namespace PurgeWhenFull
 {
     internal class Destructors
     {
