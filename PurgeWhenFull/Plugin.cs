@@ -1,6 +1,6 @@
 ﻿using BepInEx;
 
-namespace PurgeWhenFull;
+namespace SSPCP_PurgeWhenFull;
 
 [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
 public class Plugin : BaseUnityPlugin

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace PurgeWhenFull.Classes
+namespace SSPCP_PurgeWhenFull.Classes
 {
     internal class Purger
     {
