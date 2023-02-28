@@ -9,7 +9,6 @@ namespace SSPCP_PurgeWhenFull
     {
         internal static IEnumerator Coroutine()
         {
-            Debug.Log(Application.dataPath);
             for (;;)
             {
                 PurgeIfFull(Object.FindObjectsOfType<ActionRecycle>());
@@ -42,7 +41,7 @@ namespace SSPCP_PurgeWhenFull
                 string group = WOA.GetWorldObject()?.GetGroup()?.id;
                 if (!group.StartsWith("Destructor") && !group.StartsWith("RecyclingMachine")) continue;
 
-                Inventory inv = WOA.transform.GetComponent<InventoryAssociated>()?.GetInventory();
+                Inventory inv = WOA.GetComponent<InventoryAssociated>()?.GetInventory();
                 if (inv == null || inv.IsEmpty()) continue;
 
                 if (!Plugin.CheatInventoryStacking && inv.IsFull())
