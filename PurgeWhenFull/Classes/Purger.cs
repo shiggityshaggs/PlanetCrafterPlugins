@@ -7,7 +7,8 @@ namespace SSPCP_PurgeWhenFull.Classes
     {
         internal static IEnumerator Coroutine()
         {
-            for (; ; )
+            UnityEngine.Debug.Log(Application.dataPath);
+            for (;;)
             {
                 Destructors.Purge();
                 Recyclers.Purge();
