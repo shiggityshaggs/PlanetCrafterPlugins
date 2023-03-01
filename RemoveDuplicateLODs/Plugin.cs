@@ -19,10 +19,7 @@ namespace SSPCP_RemoveDuplicateLODs
         {
             // CTRL + L
             if (Keyboard.current.ctrlKey.isPressed
-                && Keyboard.current.lKey.wasPressedThisFrame)
-            {
-                RemoveDuplicateLODs();
-            }
+                && Keyboard.current.lKey.wasPressedThisFrame) { RemoveDuplicateLODs(); }
         }
 
         internal static void RemoveDuplicateLODs()
@@ -72,63 +69,6 @@ namespace SSPCP_RemoveDuplicateLODs
                             {
                                 Destroy(LODGroup);
                                 DestroyCount++;
-                            }
-                        }
-                    }
-                }
-            }
-            Debug.Log($"\r\n"
-                + $"Checked {LODCount} LODs across {LODGroups.Count()} LODGroups.\r\n"
-                + $"Removed {DuplicateCount} LODs.\r\n"
-                + $"Destroyed {DestroyCount} empty LODGroups.");
-        }
-
-
-        [Obsolete("I wrote this one first, but it's too easy to lose track of which iterator goes where."
-                  + "Use RemoveDuplicateLODs() instead.")]
-        private void RemoveDuplicateLODs_for()
-        {
-            LODGroup[] LODGroups = Resources.FindObjectsOfTypeAll<LODGroup>();
-            int DuplicateCount = 0;
-            int LODCount = 0;
-            int DestroyCount = 0;
-
-            for (int i = LODGroups.Count() - 1; i >= 0; i--)
-            {
-                LODGroup LODGroup = LODGroups[i];
-                Transform root = LODGroup.transform.GetRoot();
-                LOD[] LODs = LODGroup.GetLODs();
-
-                LODCount += LODs.Count();
-
-                for (int j = LODs.Count() - 1; j >= 0; j--)
-                {
-                    LOD LOD = LODs[j];
-                    Transform crawler = LODGroup.transform;
-                    while (crawler != root)
-                    {
-                        crawler = crawler.parent;
-
-                        LODGroup crawlerLOD = crawler.GetComponent<LODGroup>();
-                        if (crawlerLOD == null) continue;
-                        LOD[] crawlerLODs = crawlerLOD.GetLODs();
-
-                        for (int k = crawlerLODs.Count() - 1; k >= 0; k--)
-                        {
-                            bool hasDuplicates = crawlerLODs[k].renderers.Intersect(LODs[j].renderers).ToArray().Count() > 0;
-                            if (hasDuplicates)
-                            {
-                                DuplicateCount++;
-                                LOD[] newLODs = LODs.Where(l => !l.Equals(LOD)).ToArray();
-                                if (newLODs.Length > 0)
-                                {
-                                    LODGroup.SetLODs(newLODs);
-                                }
-                                else
-                                {
-                                    Destroy(LODGroups[i]);
-                                    DestroyCount++;
-                                }
                             }
                         }
                     }
