@@ -1,7 +1,5 @@
 ﻿using BepInEx;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace SSPCP_MaxLOD
@@ -21,7 +19,7 @@ namespace SSPCP_MaxLOD
         {
             while (true)
             {
-                List<LODGroup> LODGroups = FindObjectsOfType<LODGroup>().ToList();
+                LODGroup[] LODGroups = UnityEngine.Resources.FindObjectsOfTypeAll<LODGroup>();
 
                 foreach (LODGroup LG in LODGroups)
                 {
