@@ -77,11 +77,15 @@ namespace SSPCP_RemoveDuplicateLODs
                     }
                 }
             }
-            Debug.Log($"\r\nChecked {LODCount} LODs across {LODGroups.Count()} LODGroups.\r\nRemoved {DuplicateCount} LODs.\r\nDestroyed {DestroyCount} empty LODGroups.");
+            Debug.Log($"\r\n"
+                + $"Checked {LODCount} LODs across {LODGroups.Count()} LODGroups.\r\n"
+                + $"Removed {DuplicateCount} LODs.\r\n"
+                + $"Destroyed {DestroyCount} empty LODGroups.");
         }
 
 
-        [Obsolete("I wrote this one first, but it's too easy to lose track of which iterator goes where. Use RemoveDuplicateLODs() instead.")]
+        [Obsolete("I wrote this one first, but it's too easy to lose track of which iterator goes where."
+                  + "Use RemoveDuplicateLODs() instead.")]
         private void RemoveDuplicateLODs_for()
         {
             LODGroup[] LODGroups = Resources.FindObjectsOfTypeAll<LODGroup>();
@@ -130,7 +134,10 @@ namespace SSPCP_RemoveDuplicateLODs
                     }
                 }
             }
-            Debug.Log($"\r\nChecked {LODCount} LODs across {LODGroups.Count()} LODGroups.\r\nRemoved {DuplicateCount} LODs.\r\nDestroyed {DestroyCount} empty LODGroups.");
+            Debug.Log($"\r\n"
+                + $"Checked {LODCount} LODs across {LODGroups.Count()} LODGroups.\r\n"
+                + $"Removed {DuplicateCount} LODs.\r\n"
+                + $"Destroyed {DestroyCount} empty LODGroups.");
         }
     }
 }
