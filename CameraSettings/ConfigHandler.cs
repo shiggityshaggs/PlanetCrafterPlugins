@@ -58,15 +58,15 @@ namespace SSPCP_CameraSettings
             if (Camera.main == null) return;
             init = true;
 
-            targetFrameRate = Config.Bind(section: "Application", key: "targetFrameRate", defaultValue: Application.targetFrameRate, targetFrameRateDescription);
-            allowHDR = Config.Bind(section: "Camera", key: "allowHDR", defaultValue: true, allowHDRDescription);
-            allowMSAA = Config.Bind(section: "Camera", key: "allowMSAA", defaultValue: true, allowMSAADescription);
-            fieldOfView = Config.Bind(section: "Camera", key: "fieldOfView", defaultValue: Camera.main.fieldOfView, fieldOfViewDescription);
-            farClipPlane = Config.Bind(section: "Camera", key: "farClipPlane", defaultValue: Camera.main.farClipPlane, farClipPlaneDescription);
-            useOcclusionCulling = Config.Bind(section: "Camera", key: "useOcclusionCulling", defaultValue: true, useOcclusionCullingDescription);
-            layerCullSpherical = Config.Bind(section: "Camera", key: "layerCullSpherical", defaultValue: Camera.main.layerCullSpherical, layerCullSphericalDescription);
-            maximumLODLevel = Config.Bind(section: "QualitySettings", key: "maximumLODLevel", defaultValue: 0, maximumLODLevelDescription);
-            vSyncCount = Config.Bind(section: "QualitySettings", key: "vSyncCount", defaultValue: 0, vSyncCountDescription);
+            targetFrameRate = Config.Bind(section: "Application", key: "targetFrameRate", defaultValue: Application.targetFrameRate, configDescription: targetFrameRateDescription);
+            allowHDR = Config.Bind(section: "Camera", key: "allowHDR", defaultValue: true, configDescription: allowHDRDescription);
+            allowMSAA = Config.Bind(section: "Camera", key: "allowMSAA", defaultValue: true, configDescription: allowMSAADescription);
+            fieldOfView = Config.Bind(section: "Camera", key: "fieldOfView", defaultValue: Camera.main.fieldOfView, configDescription: fieldOfViewDescription);
+            farClipPlane = Config.Bind(section: "Camera", key: "farClipPlane", defaultValue: Camera.main.farClipPlane, configDescription: farClipPlaneDescription);
+            useOcclusionCulling = Config.Bind(section: "Camera", key: "useOcclusionCulling", defaultValue: true, configDescription: useOcclusionCullingDescription);
+            layerCullSpherical = Config.Bind(section: "Camera", key: "layerCullSpherical", defaultValue: Camera.main.layerCullSpherical, configDescription: layerCullSphericalDescription);
+            maximumLODLevel = Config.Bind(section: "QualitySettings", key: "maximumLODLevel", defaultValue: 0, configDescription: maximumLODLevelDescription);
+            vSyncCount = Config.Bind(section: "QualitySettings", key: "vSyncCount", defaultValue: 0, configDescription: vSyncCountDescription);
 
             targetFrameRate.SettingChanged += (object sender, EventArgs e) => Application.targetFrameRate = targetFrameRate.Value;
             allowHDR.SettingChanged += (object sender, EventArgs e) => Camera.main.allowHDR = allowHDR.Value;
