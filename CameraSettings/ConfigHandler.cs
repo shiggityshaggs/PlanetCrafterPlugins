@@ -23,7 +23,7 @@ namespace SSPCP_CameraSettings
         private ConfigDescription allowHDRDescription = new(description: "High dynamic range", acceptableValues: TrueFalse);
         private ConfigDescription allowMSAADescription = new(description: "Multisample Anti-Aliasing", acceptableValues: TrueFalse);
         private ConfigDescription fieldOfViewDescription = new(description: "Field of View", acceptableValues: new AcceptableValueRange<float>(50, 179));
-        private ConfigDescription targetFrameRateDescription = new(description: "Framerate (FPS)", acceptableValues: new AcceptableValueRange<int>(15, 240));
+        private ConfigDescription targetFrameRateDescription = new(description: "FPS (-1 is uncapped)", acceptableValues: new AcceptableValueRange<int>(-1, 240));
         private ConfigDescription farClipPlaneDescription = new(description: "View distance", acceptableValues: new AcceptableValueRange<float>(1000, 15000));
         private ConfigDescription layerCullSphericalDescription = new(description: "View distance is spherical", acceptableValues: TrueFalse);
         private ConfigDescription useOcclusionCullingDescription = new(description: "Occlusion Culling", acceptableValues: TrueFalse);
@@ -101,7 +101,7 @@ namespace SSPCP_CameraSettings
 
         private void VSyncCount_SettingChanged(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            QualitySettings.vSyncCount = vSyncCount.Value;
         }
 
         private void MaximumLODLevel_SettingChanged(object sender, EventArgs e)
