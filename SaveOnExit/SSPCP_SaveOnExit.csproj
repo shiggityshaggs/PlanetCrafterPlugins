@@ -29,5 +29,8 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\Planet Crafter_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.InputSystem">
+      <HintPath>..\..\..\Planet Crafter_Data\Managed\Unity.InputSystem.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

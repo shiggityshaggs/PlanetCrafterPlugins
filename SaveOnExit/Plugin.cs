@@ -1,6 +1,7 @@
 ﻿using BepInEx;
 using HarmonyLib;
 using SpaceCraft;
+using UnityEngine.InputSystem;
 
 namespace SSPCP_SaveOnExit
 {
@@ -21,7 +22,7 @@ namespace SSPCP_SaveOnExit
         {
             private static void Prefix(UiWindowPause __instance)
             {
-                __instance.OnSave();
+                if (!Keyboard.current.shiftKey.isPressed) __instance.OnSave();
             }
         }
     }
