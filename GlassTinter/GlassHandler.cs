@@ -1,9 +1,8 @@
-﻿ using BepInEx;
+﻿using BepInEx;
 using BepInEx.Configuration;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 namespace SSPCP_GlassTinter
@@ -21,76 +20,65 @@ namespace SSPCP_GlassTinter
         private readonly ConfigDescription blueDescription = new(description: string.Empty, acceptableValues: new AcceptableValueRange<int>(0, 255));
         private readonly ConfigDescription alphaDescription = new(description: string.Empty, acceptableValues: new AcceptableValueRange<int>(0, 100));
 
-        HashSet<Material> GlassMaterials = new();
-
-        private bool init;
+        private readonly HashSet<Material> GlassMaterials = new();
 
         private void Start()
         {
+            Initialize();
+            PopulateHashSet();
+            IterateGlass();
             StartCoroutine(ReloadConfig());
+        }
+
+        private void Initialize()
+        {
+            red = Config.Bind(section: "Glass", key: "Red", defaultValue: 0, configDescription: redDescription);
+            green = Config.Bind(section: "Glass", key: "Green", defaultValue: 190, configDescription: greenDescription);
+            blue = Config.Bind(section: "Glass", key: "Blue", defaultValue: 255, configDescription: blueDescription);
+            alpha = Config.Bind(section: "Glass", key: "Alpha", defaultValue: 0, configDescription: alphaDescription);
+            Config.SettingChanged += Config_SettingChanged;
+        }
+
+        private void PopulateHashSet()
+        {
+            Material[] materials = UnityEngine.Resources.FindObjectsOfTypeAll<Material>();
+            foreach (Material material in materials)
+            {
+                if (material == null || (material.name != "Glass" && material.name != "GlassBiodome2")) continue;
+                GlassMaterials.Add(material);
+            }
         }
 
         private IEnumerator ReloadConfig()
         {
             while (true)
             {
-                if (!init) Initialize();
-
                 try
                 {
-                    if (init) Config.Reload();
+                    Config.Reload();
                 }
-                catch (IOException e)
+                catch
                 {
-                    Debug.Log(e.Message);
+                    // Sharing violation. No worries; retry in a second.
                 }
 
                 yield return new WaitForSeconds(1f);
             }
         }
 
-        private void Initialize()
+        private void Config_SettingChanged(object sender, SettingChangedEventArgs e)
         {
-            init = true;
-            PopulateHashSet();
-
-            red = Config.Bind(section: "Glass", key: "Red", defaultValue: 0, configDescription: redDescription);
-            green = Config.Bind(section: "Glass", key: "Green", defaultValue: 190, configDescription: greenDescription);
-            blue = Config.Bind(section: "Glass", key: "Blue", defaultValue: 255, configDescription: blueDescription);
-            alpha = Config.Bind(section: "Glass", key: "Alpha", defaultValue: 0, configDescription: alphaDescription);
-
-            red.SettingChanged += SomethingHasChanged;
-            green.SettingChanged += SomethingHasChanged;
-            blue.SettingChanged += SomethingHasChanged;
-            alpha.SettingChanged += SomethingHasChanged;
-        }
-
-        private void SomethingHasChanged(object sender, EventArgs e)
-        {
+            Debug.Log($"{DateTime.Now}\t{MyPluginInfo.PLUGIN_NAME} {MyPluginInfo.PLUGIN_VERSION}\tconfig changed");
             IterateGlass();
         }
 
-        private void PopulateHashSet()
-        {
-            var materials = UnityEngine.Resources.FindObjectsOfTypeAll<Material>();
-            foreach (var material in materials)
-            {
-                if (material == null || (material.name != "Glass" && material.name != "GlassBiodome2") ) continue;
-                GlassMaterials.Add(material);
-            }
-        }
-
-        private const float k = 0.003921568627451f; // 1 divided by 255 == 0.003921568627451
+        private const float k = 0.003921568627451f; // 1 divided by 255
 
         private void IterateGlass()
         {
             foreach (Material material in GlassMaterials)
             {
-                if (material == null)
-                {
-                    GlassMaterials.Remove(material);
-                    continue;
-                }
+                if (material == null) continue;
 
                 material.color = new Color(
                     Mathf.Clamp01(red.Value * k),
