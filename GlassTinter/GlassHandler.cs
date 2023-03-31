@@ -10,10 +10,7 @@ namespace SSPCP_GlassTinter
     [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
     internal class GlassHandler : BaseUnityPlugin
     {
-        private ConfigEntry<int> red;
-        private ConfigEntry<int> green;
-        private ConfigEntry<int> blue;
-        private ConfigEntry<int> alpha;
+        private ConfigEntry<int> red, green, blue, alpha;
 
         private readonly ConfigDescription colorDescription = new(description: string.Empty, acceptableValues: new AcceptableValueRange<int>(0, 255));
         private readonly ConfigDescription alphaDescription = new(description: string.Empty, acceptableValues: new AcceptableValueRange<int>(0, 100));
@@ -44,17 +41,24 @@ namespace SSPCP_GlassTinter
             if (!PendingChanges)
             {
                 PendingChanges = true;
-                Debug.Log($"{DateTime.Now.ToShortTimeString()}\t{MyPluginInfo.PLUGIN_NAME} v{MyPluginInfo.PLUGIN_VERSION}\tconfig changed");
+                Debug.Log($"{DateTime.Now.ToString("HH:mm:ss")}\t{MyPluginInfo.PLUGIN_NAME} v{MyPluginInfo.PLUGIN_VERSION}\tconfig changed");
             }
         }
 
         private void PopulateHashSet()
         {
-            Material[] materials = UnityEngine.Resources.FindObjectsOfTypeAll<Material>();
+            Material[] materials = Resources.FindObjectsOfTypeAll<Material>();
+
+            List<string> NamesToInclude = new()
+            {
+                "Glass",
+                "GlassBiodome2"
+            };
+
             foreach (Material material in materials)
             {
-                if (material == null || (material.name != "Glass" && material.name != "GlassBiodome2")) continue;
-                GlassMaterials.Add(material);
+                if (material == null) continue;
+                if (NamesToInclude.Contains(material.name)) GlassMaterials.Add(material);
             }
         }
 
@@ -62,14 +66,7 @@ namespace SSPCP_GlassTinter
         {
             while (true)
             {
-                try
-                {
-                    Config.Reload();
-                }
-                catch
-                {
-                    // Sharing violation. No worries; retry in a second.
-                }
+                try { Config.Reload(); } catch { /*Sharing violation. No worries; retry in a second.*/ } 
 
                 if (PendingChanges)
                 {
