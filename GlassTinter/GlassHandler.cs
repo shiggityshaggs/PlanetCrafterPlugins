@@ -15,10 +15,10 @@ namespace SSPCP_GlassTinter
         private ConfigEntry<int> blue;
         private ConfigEntry<int> alpha;
 
-        private ConfigDescription redDescription = new(description: "Red 0-255", acceptableValues: new AcceptableValueRange<int>(0, 255));
-        private ConfigDescription greenDescription = new(description: "Green 0-255", acceptableValues: new AcceptableValueRange<int>(0, 255));
-        private ConfigDescription blueDescription = new(description: "Blue 0-255", acceptableValues: new AcceptableValueRange<int>(0, 255));
-        private ConfigDescription alphaDescription = new(description: "Red 0-100", acceptableValues: new AcceptableValueRange<int>(0, 100));
+        private ConfigDescription redDescription = new(description: string.Empty, acceptableValues: new AcceptableValueRange<int>(0, 255));
+        private ConfigDescription greenDescription = new(description: string.Empty, acceptableValues: new AcceptableValueRange<int>(0, 255));
+        private ConfigDescription blueDescription = new(description: string.Empty, acceptableValues: new AcceptableValueRange<int>(0, 255));
+        private ConfigDescription alphaDescription = new(description: string.Empty, acceptableValues: new AcceptableValueRange<int>(0, 100));
 
         HashSet<Material> GlassMaterials = new();
 
