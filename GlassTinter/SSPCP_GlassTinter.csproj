@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
     <AssemblyName>SSPCP_GlassTinter</AssemblyName>
-    <Description>Glass Control</Description>
-    <Version>1.1.0</Version>
+    <Description>Glass Tinter</Description>
+    <Version>1.2.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <RestoreAdditionalProjectSources>

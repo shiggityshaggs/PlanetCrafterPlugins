@@ -15,28 +15,37 @@ namespace SSPCP_GlassTinter
         private ConfigEntry<int> blue;
         private ConfigEntry<int> alpha;
 
-        private readonly ConfigDescription redDescription = new(description: string.Empty, acceptableValues: new AcceptableValueRange<int>(0, 255));
-        private readonly ConfigDescription greenDescription = new(description: string.Empty, acceptableValues: new AcceptableValueRange<int>(0, 255));
-        private readonly ConfigDescription blueDescription = new(description: string.Empty, acceptableValues: new AcceptableValueRange<int>(0, 255));
+        private readonly ConfigDescription colorDescription = new(description: string.Empty, acceptableValues: new AcceptableValueRange<int>(0, 255));
         private readonly ConfigDescription alphaDescription = new(description: string.Empty, acceptableValues: new AcceptableValueRange<int>(0, 100));
 
         private readonly HashSet<Material> GlassMaterials = new();
+
+        private bool PendingChanges = true;
 
         private void Start()
         {
             Initialize();
             PopulateHashSet();
-            IterateGlass();
             StartCoroutine(ReloadConfig());
         }
 
         private void Initialize()
         {
-            red = Config.Bind(section: "Glass", key: "Red", defaultValue: 0, configDescription: redDescription);
-            green = Config.Bind(section: "Glass", key: "Green", defaultValue: 190, configDescription: greenDescription);
-            blue = Config.Bind(section: "Glass", key: "Blue", defaultValue: 255, configDescription: blueDescription);
+            red = Config.Bind(section: "Glass", key: "Red", defaultValue: 0, configDescription: colorDescription);
+            green = Config.Bind(section: "Glass", key: "Green", defaultValue: 190, configDescription: colorDescription);
+            blue = Config.Bind(section: "Glass", key: "Blue", defaultValue: 255, configDescription: colorDescription);
             alpha = Config.Bind(section: "Glass", key: "Alpha", defaultValue: 0, configDescription: alphaDescription);
+
             Config.SettingChanged += Config_SettingChanged;
+        }
+
+        private void Config_SettingChanged(object sender, SettingChangedEventArgs e)
+        {
+            if (!PendingChanges)
+            {
+                PendingChanges = true;
+                Debug.Log($"{DateTime.Now.ToShortTimeString()}\t{MyPluginInfo.PLUGIN_NAME} v{MyPluginInfo.PLUGIN_VERSION}\tconfig changed");
+            }
         }
 
         private void PopulateHashSet()
@@ -62,14 +71,14 @@ namespace SSPCP_GlassTinter
                     // Sharing violation. No worries; retry in a second.
                 }
 
+                if (PendingChanges)
+                {
+                    PendingChanges = false;
+                    IterateGlass();
+                }
+
                 yield return new WaitForSeconds(1f);
             }
-        }
-
-        private void Config_SettingChanged(object sender, SettingChangedEventArgs e)
-        {
-            Debug.Log($"{DateTime.Now}\t{MyPluginInfo.PLUGIN_NAME} {MyPluginInfo.PLUGIN_VERSION}\tconfig changed");
-            IterateGlass();
         }
 
         private const float k = 0.003921568627451f; // 1 divided by 255
