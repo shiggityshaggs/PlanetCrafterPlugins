@@ -3,6 +3,7 @@ using BepInEx.Configuration;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 namespace SSPCP_GlassTinter
@@ -15,10 +16,10 @@ namespace SSPCP_GlassTinter
         private ConfigEntry<int> blue;
         private ConfigEntry<int> alpha;
 
-        private ConfigDescription redDescription = new(description: string.Empty, acceptableValues: new AcceptableValueRange<int>(0, 255));
-        private ConfigDescription greenDescription = new(description: string.Empty, acceptableValues: new AcceptableValueRange<int>(0, 255));
-        private ConfigDescription blueDescription = new(description: string.Empty, acceptableValues: new AcceptableValueRange<int>(0, 255));
-        private ConfigDescription alphaDescription = new(description: string.Empty, acceptableValues: new AcceptableValueRange<int>(0, 100));
+        private readonly ConfigDescription redDescription = new(description: string.Empty, acceptableValues: new AcceptableValueRange<int>(0, 255));
+        private readonly ConfigDescription greenDescription = new(description: string.Empty, acceptableValues: new AcceptableValueRange<int>(0, 255));
+        private readonly ConfigDescription blueDescription = new(description: string.Empty, acceptableValues: new AcceptableValueRange<int>(0, 255));
+        private readonly ConfigDescription alphaDescription = new(description: string.Empty, acceptableValues: new AcceptableValueRange<int>(0, 100));
 
         HashSet<Material> GlassMaterials = new();
 
@@ -26,7 +27,6 @@ namespace SSPCP_GlassTinter
 
         private void Start()
         {
-            Config.SaveOnConfigSet = true;
             StartCoroutine(ReloadConfig());
         }
 
@@ -35,7 +35,16 @@ namespace SSPCP_GlassTinter
             while (true)
             {
                 if (!init) Initialize();
-                if (init) Config.Reload();
+
+                try
+                {
+                    if (init) Config.Reload();
+                }
+                catch (IOException e)
+                {
+                    Debug.Log(e.Message);
+                }
+
                 yield return new WaitForSeconds(1f);
             }
         }
@@ -66,7 +75,7 @@ namespace SSPCP_GlassTinter
             var materials = UnityEngine.Resources.FindObjectsOfTypeAll<Material>();
             foreach (var material in materials)
             {
-                if (material == null || material.name.ToLower() != "glass") continue;
+                if (material == null || (material.name != "Glass" && material.name != "GlassBiodome2") ) continue;
                 GlassMaterials.Add(material);
             }
         }
