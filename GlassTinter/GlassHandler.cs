@@ -3,6 +3,7 @@ using BepInEx.Configuration;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace SSPCP_GlassTinter
@@ -52,7 +53,9 @@ namespace SSPCP_GlassTinter
             List<string> NamesToInclude = new()
             {
                 "Glass",
-                "GlassBiodome2"
+                "GlassBiodome2",
+                "GlassFloorTransparent",
+                // GlassButterflyDome1
             };
 
             foreach (Material material in materials)
