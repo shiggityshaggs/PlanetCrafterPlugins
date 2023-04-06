@@ -1,0 +1,1 @@
+Makes crates stackable. Snaps on top of other crates.
