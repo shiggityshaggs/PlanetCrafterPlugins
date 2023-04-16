@@ -1,5 +1,4 @@
-﻿using BepInEx;
-using BepInEx.Configuration;
+﻿using BepInEx.Configuration;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,8 +7,7 @@ using UnityEngine;
 
 namespace SSPCP_GlassTinter
 {
-    [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
-    internal class GlassHandler : BaseUnityPlugin
+    internal partial class Plugin
     {
         private ConfigEntry<int> red, green, blue, alpha;
 
@@ -55,7 +53,8 @@ namespace SSPCP_GlassTinter
                 "Glass",
                 "GlassBiodome2",
                 "GlassFloorTransparent",
-                // GlassButterflyDome1
+                "GlassBiolab",
+                "GlassButterflyDome1",
             };
 
             foreach (Material material in materials)
@@ -67,8 +66,23 @@ namespace SSPCP_GlassTinter
 
         private IEnumerator ReloadConfig()
         {
+            float tick = 3f;
+            bool lateBoundMaterialsHandled = false;
+
             while (true)
             {
+                if (!lateBoundMaterialsHandled)
+                {
+                    PopulateHashSet(); // biolab might not be as prefab'ed as expected -- "GlassBiolab" appears runtime generated. Whatever; this fixes it.
+                    Material GlassBiolab = GlassMaterials.FirstOrDefault(material => material.name == "GlassBiolab");
+                    if (GlassBiolab != null)
+                    {
+                        lateBoundMaterialsHandled = true;
+                        IterateGlass();
+                        tick = 1f;
+                    }
+                }
+
                 try { Config.Reload(); } catch { /*Sharing violation. No worries; retry in a second.*/ } 
 
                 if (PendingChanges)
@@ -77,7 +91,7 @@ namespace SSPCP_GlassTinter
                     IterateGlass();
                 }
 
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(tick);
             }
         }
 
