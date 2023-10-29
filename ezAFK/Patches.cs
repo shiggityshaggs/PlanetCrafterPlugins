@@ -6,6 +6,15 @@ namespace ezAFK
 {
     internal class Patches
     {
+        [HarmonyPatch(typeof(PlayerGaugesHandler), "SetOutsideOxygenChangeValue")]
+        class SkipOxygenCalc
+        {
+            static bool Prefix()
+            {
+                return Application.isFocused;
+            }
+        }
+
         [HarmonyPatch(typeof(PlayerGaugeHealth), nameof(PlayerGaugeHealth.AddToCurrentValue))]
         class AFKHealth
         {
