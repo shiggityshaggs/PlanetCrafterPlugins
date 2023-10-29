@@ -2,6 +2,7 @@
 using HarmonyLib;
 using System.Reflection;
 using UnityEngine;
+using SpaceCraft;
 
 namespace ezAFK
 {
@@ -27,8 +28,14 @@ namespace ezAFK
             }
             else
             {
+                if (!originalTargetFramerate.Equals(default))
                 Application.targetFrameRate = originalTargetFramerate;
             }
+
+            PlayerGaugesHandler playerGaugesHandler = Managers.GetManager<PlayersManager>()?.GetActivePlayerController()?.GetPlayerGaugesHandler();
+            playerGaugesHandler?.GetPlayerGaugeHealth()?.SetInfinityStatus(!hasFocus);
+            playerGaugesHandler?.GetPlayerGaugeOxygen()?.SetInfinityStatus(!hasFocus);
+            playerGaugesHandler?.GetPlayerGaugeThirst()?.SetInfinityStatus(!hasFocus);
         }
     }
 }
