@@ -21,13 +21,13 @@ namespace ezAFK
 
         private void Application_focusChanged(bool hasFocus)
         {
-            FPS(hasFocus);
-            GaugeStatus(hasFocus);
+            FPS();
+            GaugeStatus();
         }
 
-        private void FPS(bool hasFocus)
+        private void FPS()
         {
-            if (!hasFocus)
+            if (!Application.isFocused)
             {
                 originalTargetFramerate = Application.targetFrameRate;
                 Application.targetFrameRate = 5;
@@ -39,12 +39,12 @@ namespace ezAFK
             }
         }
 
-        private void GaugeStatus(bool hasFocus)
+        private void GaugeStatus()
         {
             PlayerGaugesHandler playerGaugesHandler = Managers.GetManager<PlayersManager>()?.GetActivePlayerController()?.GetPlayerGaugesHandler();
-            playerGaugesHandler?.GetPlayerGaugeHealth()?.SetInfinityStatus(!hasFocus);
-            playerGaugesHandler?.GetPlayerGaugeOxygen()?.SetInfinityStatus(!hasFocus);
-            playerGaugesHandler?.GetPlayerGaugeThirst()?.SetInfinityStatus(!hasFocus);
+            playerGaugesHandler?.GetPlayerGaugeHealth()?.SetInfinityStatus(!Application.isFocused);
+            playerGaugesHandler?.GetPlayerGaugeOxygen()?.SetInfinityStatus(!Application.isFocused);
+            playerGaugesHandler?.GetPlayerGaugeThirst()?.SetInfinityStatus(!Application.isFocused);
         }
     }
 }
