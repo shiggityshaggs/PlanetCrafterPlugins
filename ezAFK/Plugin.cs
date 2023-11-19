@@ -9,15 +9,21 @@ namespace ezAFK
     [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
     public class Plugin : BaseUnityPlugin
     {
+        private int originalTargetFramerate;
+
         private void Awake()
         {
             // Plugin startup logic
             Logger.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is loaded!");
             Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), "ezAFK");
-            Application.focusChanged += FPS;
+            Application.focusChanged += Application_focusChanged;
         }
 
-        private int originalTargetFramerate;
+        private void Application_focusChanged(bool hasFocus)
+        {
+            FPS(hasFocus);
+            GaugeStatus(hasFocus);
+        }
 
         private void FPS(bool hasFocus)
         {
@@ -31,7 +37,10 @@ namespace ezAFK
                 if (!originalTargetFramerate.Equals(default))
                 Application.targetFrameRate = originalTargetFramerate;
             }
+        }
 
+        private void GaugeStatus(bool hasFocus)
+        {
             PlayerGaugesHandler playerGaugesHandler = Managers.GetManager<PlayersManager>()?.GetActivePlayerController()?.GetPlayerGaugesHandler();
             playerGaugesHandler?.GetPlayerGaugeHealth()?.SetInfinityStatus(!hasFocus);
             playerGaugesHandler?.GetPlayerGaugeOxygen()?.SetInfinityStatus(!hasFocus);
